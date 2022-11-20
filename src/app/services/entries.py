@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Union, Sequence
+from typing import Union, Sequence, Optional
 
 from pydantic import BaseModel
 from pydantic.types import NonNegativeInt
@@ -31,6 +31,7 @@ class House(BaseModel):
     apartments: int
     price: float
     year: int
+    h3: Optional[str]
 
 
 # aliases
