@@ -43,6 +43,19 @@ Houses = Sequence[House]
 H3Indexes = Sequence[H3Index]
 
 
+class Geopos(BaseModel):
+    pass
+
+
+class PointGeopos(Geopos):
+    geometry: Point
+    r: int
+
+
+class PolygonGeopos(Geopos):
+    geometry: Polygon
+
+
 # commands and results
 
 
@@ -51,13 +64,12 @@ class BaseAggrCommand(BaseModel):
     aggr: AggrEnum
 
 
-class PointAggrCommand(BaseAggrCommand):
-    geometry: Point
-    r: int
+class PointAggrCommand(BaseAggrCommand, PointGeopos):
+    pass
 
 
-class PolygonAggrCommand(BaseAggrCommand):
-    geometry: Polygon
+class PolygonAggrCommand(BaseAggrCommand, PolygonGeopos):
+    pass
 
 
 class AggrResult(BaseModel):
