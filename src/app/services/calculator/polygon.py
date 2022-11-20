@@ -1,12 +1,10 @@
-from src.app.services.calculator.base import BaseCalculator
-from src.app.services.entries import AggrResult
-from src.app.services.indexer.polygon import PolygonIndexer
+from .base import BaseCalculator
+from .. import entries
+from ..indexer import PolygonIndexer
 
 
 class PolygonCalculator(BaseCalculator):
-    def __init__(self):
-        self.indexer = PolygonIndexer()
+    indexer: PolygonIndexer
 
-    def calc(self, geopos) -> AggrResult:
-        indexes = self.indexer.index(geopos)
-        return self.calc_by_indexes(indexes)
+    def get_indexes(self, geopos: entries.PolygonGeopos) -> entries.H3Indexes:
+        return self.indexer.index(geopos=geopos)

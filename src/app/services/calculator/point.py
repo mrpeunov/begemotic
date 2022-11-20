@@ -1,12 +1,10 @@
-from src.app.services.calculator.base import BaseCalculator
-from src.app.services.entries import AggrResult
-from src.app.services.indexer.point import PointIndexer
+from .base import BaseCalculator
+from .. import entries
+from ..indexer import PointIndexer
 
 
 class PointCalculator(BaseCalculator):
-    def __init__(self):
-        self.indexer = PointIndexer()
+    indexer: PointIndexer
 
-    def calc(self, geopos, r) -> AggrResult:
-        indexes = self.indexer.index(geopos, r)
-        return self.calc_by_indexes(indexes)
+    def get_indexes(self, geopos: entries.PointGeopos) -> entries.H3Indexes:
+        return self.indexer.index(geopos)
