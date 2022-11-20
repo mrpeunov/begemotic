@@ -1,7 +1,7 @@
 import h3
 from loguru import logger
 
-from src.core import config
+from src.core.config import config
 from .. import entries
 from .base import BaseIndexer
 
