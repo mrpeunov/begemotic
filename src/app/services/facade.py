@@ -1,18 +1,23 @@
-from src.app.services.aggregator.map import get_aggregator
-from src.app.services.calculator import PointCalculator, PolygonCalculator
-from src.app.services import entries
+from .aggregator.map import get_aggregator
+from .calculator import PointCalculator, PolygonCalculator
+from .indexer import PointIndexer, PolygonIndexer
 from src.app.services.repo import BaseHouseRepo
+
+import entries
 
 
 class FacadeService:
     def calculate_in_point(self, command: entries.PointAggrCommand) -> entries.AggrResult:
+        aggregator = get_aggregator(
+            field=command.field,
+            aggr=command.aggr
+        )
+
         return PointCalculator(
             repo=BaseHouseRepo(),
-            aggregator=get_aggregator(
-                field=command.field,
-                aggr=command.aggr
-            )
-        ).calc(geopos=command.geometry, r=command.r)
+            aggregator=aggregator,
+            indexer=PointIndexer()
+        ).calc(geopos=command)
 
     def calculate_in_polygon(self, command: entries.PolygonAggrCommand) -> entries.AggrResult:
         return PolygonCalculator(
@@ -20,5 +25,6 @@ class FacadeService:
             aggregator=get_aggregator(
                 field=command.field,
                 aggr=command.aggr
-            )
-        ).calc(geopos=command.geometry)
+            ),
+            indexer=PolygonIndexer()
+        ).calc(geopos=command)
