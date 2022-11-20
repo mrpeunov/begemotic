@@ -17,11 +17,6 @@ def startup():
     logger.add(sys.stdout, format="{time} {level} {message}", filter="my_module", level="INFO")
 
 
-@app.on_event("shutdown")
-def shutdown():
-    pass
-
-
 if __name__ == "__main__":
     uvicorn.run(
         "server.app:app",
