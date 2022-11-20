@@ -3,7 +3,7 @@ from .calculator import PointCalculator, PolygonCalculator
 from .indexer import PointIndexer, PolygonIndexer
 from src.app.services.repo import BaseHouseRepo
 
-import entries
+from . import entries
 
 
 class FacadeService:

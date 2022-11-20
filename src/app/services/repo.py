@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-import entries
+from . import entries
 
 
 class BaseHouseRepo(ABC):
