@@ -1,5 +1,5 @@
-from pydantic import BaseModel
+from src.app.services import entries
 
 
-class AggrResultResponse(BaseModel):
-    value: float
+class AggrResultResponse(entries.AggrResult):
+    pass

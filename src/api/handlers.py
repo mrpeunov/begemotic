@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from src.api.contracts import responses, requests
+from src.app.services.facade import FacadeService
 
 router = APIRouter(tags=["Aggregation"])
 
@@ -11,7 +12,12 @@ router = APIRouter(tags=["Aggregation"])
     summary="Посчитать агрегацию в k метрах от точки",
 )
 async def aggregation_in_point(request: requests.PointAggrRequest):
-    return {"value": 1501}
+    return FacadeService().calculate_in_point(
+        geopos=request.geometry,
+        r=request.r,
+        aggr=request.aggr,
+        field=request.field
+    )
 
 
 @router.post(

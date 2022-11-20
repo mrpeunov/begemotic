@@ -1,41 +1,7 @@
-from enum import Enum
-from typing import List, Union
-
-from pydantic import BaseModel
+from src.app.services import entries
 
 
-class GeometryTypeEnum(str, Enum):
-    POINT = "point"
-    POLYGON = "polygon"
-
-
-class GeometryModel(BaseModel):
-    type: GeometryTypeEnum
-    coordinates: Union[List[float], List[List[List[float]]]]  # todo перевести на python 3.10
-
-
-class FieldsEnum(str, Enum):
-    APARTMENTS = "apartments"
-    PRICE = "price"
-    YEAR = "year"
-
-
-class AggrEnum(str, Enum):
-    SUM = "sum"
-    AVG = "avg"
-    MIN = "min"
-    MAX = "max"
-
-
-class BaseAggrRequest(BaseModel):
-    geometry: GeometryModel
-    field: FieldsEnum
-    aggr: AggrEnum
-
-
-class PointAggrRequest(BaseAggrRequest):
-    r: int
-
+class PointAggrRequest(entries.PointAggrCommand):
     class Config:
         schema_extra = {
             "example": {
@@ -50,7 +16,7 @@ class PointAggrRequest(BaseAggrRequest):
         }
 
 
-class PolygonAggrRequest(BaseAggrRequest):
+class PolygonAggrRequest(entries.PolygonAggrCommand):
     class Config:
         schema_extra = {
             "example": {
