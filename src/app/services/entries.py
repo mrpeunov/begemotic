@@ -1,6 +1,8 @@
 from enum import Enum
 from typing import Union, Sequence
+
 from pydantic import BaseModel
+from pydantic.types import NonNegativeInt
 from geojson_pydantic import Point, Polygon
 
 
@@ -49,7 +51,7 @@ class Geopos(BaseModel):
 
 class PointGeopos(Geopos):
     geometry: Point
-    r: int
+    r: NonNegativeInt
 
 
 class PolygonGeopos(Geopos):
