@@ -34,4 +34,3 @@ def test_polygon_indexer():
 
     indexes = indexer.index(geopos)
     assert len(indexes) == 41
-

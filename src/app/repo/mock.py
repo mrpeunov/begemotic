@@ -38,7 +38,7 @@ class MockHouseRepo(BaseHouseRepo):
         )
     ]
 
-    def get_houses_by_indexes(self, indexes: entries.H3Indexes) -> entries.Houses:
+    async def get_houses_by_indexes(self, indexes: entries.H3Indexes) -> entries.Houses:
         result = []
         for house in self.storage:
             if house.h3 in indexes:
