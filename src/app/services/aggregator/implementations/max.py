@@ -8,4 +8,4 @@ class MaxAggregator(BaseAggregator):
         self.field_getter = field_getter
 
     def aggregate(self, houses: Houses) -> AggrResult:
-        return AggrResult(value=max(houses, key=lambda house: self.field_getter.get(house)))
+        return AggrResult(value=max(map(self.field_getter.get, houses)))

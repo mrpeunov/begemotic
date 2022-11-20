@@ -4,6 +4,7 @@ from .indexer import PointIndexer, PolygonIndexer
 from src.app.services.repo import BaseHouseRepo
 
 from . import entries
+from ..repo.mock import MockHouseRepo
 
 
 class FacadeService:
@@ -14,14 +15,14 @@ class FacadeService:
         )
 
         return PointCalculator(
-            repo=BaseHouseRepo(),
+            repo=MockHouseRepo(),
             aggregator=aggregator,
             indexer=PointIndexer()
         ).calc(geopos=command)
 
     def calculate_in_polygon(self, command: entries.PolygonAggrCommand) -> entries.AggrResult:
         return PolygonCalculator(
-            repo=BaseHouseRepo(),
+            repo=MockHouseRepo(),
             aggregator=get_aggregator(
                 field=command.field,
                 aggr=command.aggr
