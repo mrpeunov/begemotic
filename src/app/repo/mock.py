@@ -3,7 +3,7 @@ from src.app.services.repo import BaseHouseRepo
 
 
 class MockHouseRepo(BaseHouseRepo):
-    def get_houses_by_indexes(self, indexes: entries.H3Indexes) -> entries.Houses:
+    async def get_houses_by_indexes(self, indexes: entries.H3Indexes) -> entries.Houses:
         return [
             entries.House(
                 id=1000,

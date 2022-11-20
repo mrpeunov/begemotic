@@ -4,15 +4,14 @@ from src.core.mongo import get_collection
 
 
 class MongoHouseRepo(BaseHouseRepo):
-    def get_houses_by_indexes(self, indexes: entries.H3Indexes) -> entries.Houses:
+    async def get_houses_by_indexes(self, indexes: entries.H3Indexes) -> entries.Houses:
         collection = get_collection()
         query = {"h3": {"$in": indexes}}
 
         houses = []
-        for house in collection.find(query):
+        async for house in collection.find(query):
             houses.append(entries.House(
                 id=str(house["_id"]),
                 **house
             ))
         return houses
-

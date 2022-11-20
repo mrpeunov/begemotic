@@ -14,13 +14,13 @@ class BaseCalculator(ABC):
         self.aggregator = aggregator
         self.indexer = indexer
 
-    def calc(self, geopos: entries.Geopos) -> entries.AggrResult:
+    async def calc(self, geopos: entries.Geopos) -> entries.AggrResult:
         indexes = self.get_indexes(geopos)
         logger.info(f"Найденные индексы: {indexes}")
-        return self._calc_by_indexes(indexes)
+        return await self._calc_by_indexes(indexes)
 
-    def _calc_by_indexes(self, indexes: entries.H3Indexes) -> entries.AggrResult:
-        houses = self.repo.get_houses_by_indexes(indexes)
+    async def _calc_by_indexes(self, indexes: entries.H3Indexes) -> entries.AggrResult:
+        houses = await self.repo.get_houses_by_indexes(indexes)
         logger.info(f"Найденные дома: {houses}")
         return self.aggregator.aggregate(houses)
 

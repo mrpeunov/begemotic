@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from src.api.contracts import responses, requests
 from src.app.services.facade import FacadeService
 from loguru import logger
+
 router = APIRouter(tags=["Aggregation"])
 
 
@@ -13,7 +14,7 @@ router = APIRouter(tags=["Aggregation"])
 )
 async def aggregation_in_point(request: requests.PointAggrRequest):
     logger.info(f"Получен запрос {request}")
-    return FacadeService().calculate_in_point(command=request)
+    return await FacadeService().calculate_in_point(command=request)
 
 
 @router.post(
@@ -23,4 +24,4 @@ async def aggregation_in_point(request: requests.PointAggrRequest):
 )
 async def aggregation_in_point(request: requests.PolygonAggrRequest):
     logger.info(f"Получен запрос {request}")
-    return FacadeService().calculate_in_polygon(command=request)
+    return await FacadeService().calculate_in_polygon(command=request)
