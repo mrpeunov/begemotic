@@ -14,5 +14,5 @@ class PointIndexer(BaseIndexer):
             resolution=config.RESOLUTION
         )
         indexes = h3.k_ring(h=main_index, k=geopos.r)
-        logger.info(f"Geopos: {geopos}; H3: {indexes}")
-        return [entries.H3Index(index) for index in indexes]
+        logger.info(f"Geopos: {geopos}; H3-count: {len(indexes)}; H3: {indexes};")
+        return list(indexes)

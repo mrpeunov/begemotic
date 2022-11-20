@@ -5,6 +5,7 @@ from src.app.services.repo import BaseHouseRepo
 
 from . import entries
 from ..repo.mock import MockHouseRepo
+from ..repo.mongo import MongoHouseRepo
 
 
 class FacadeService:
@@ -15,7 +16,7 @@ class FacadeService:
         )
 
         return PointCalculator(
-            repo=MockHouseRepo(),
+            repo=MongoHouseRepo(),
             aggregator=aggregator,
             indexer=PointIndexer()
         ).calc(geopos=command)

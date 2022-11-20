@@ -8,4 +8,6 @@ class SumAggregator(BaseAggregator):
         self.field_getter = field_getter
 
     def aggregate(self, houses: Houses) -> AggrResult:
+        for i in houses:
+            print(i.id, i.apartments)
         return AggrResult(value=sum(map(self.field_getter.get, houses)))
