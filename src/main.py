@@ -22,8 +22,8 @@ async def startup():
 
 if __name__ == "__main__":
     uvicorn.run(
-        "server.app:app",
+        app,
         host=config.APP_HOST,
         port=config.APP_PORT,
-        reload=config.RELOAD
+        reload=False
     )

@@ -13,6 +13,7 @@ class DataLoader:
         self.collection = collection
 
     async def load(self):
+        os.getcwd()
         if (size := await self._collection_size()) == 0:
             apartments = self._get_from_csv()
             self._calculate_h3(apartments)
@@ -21,7 +22,6 @@ class DataLoader:
             logger.info(f"{size} объектов уже были загружены")
 
     def _get_from_csv(self) -> List[Dict]:
-
         with open('./src/static/apartments.csv', newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter=',', quotechar='"')
             apartments = []
