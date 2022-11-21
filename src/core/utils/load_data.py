@@ -4,7 +4,7 @@ import pandas as pd
 import ast
 import h3
 from loguru import logger
-from src.core.config import config
+from core.config import config
 
 
 class DataLoader:

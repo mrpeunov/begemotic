@@ -1,5 +1,5 @@
-from src.app.services import entries
-from src.app.services.repo import BaseHouseRepo
+from app.services import entries
+from app.services.repo import BaseHouseRepo
 
 
 class MockHouseRepo(BaseHouseRepo):

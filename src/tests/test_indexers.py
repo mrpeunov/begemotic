@@ -1,5 +1,5 @@
-from src.app.services.indexer import PointIndexer, PolygonIndexer
-from src.app.services import entries
+from app.services.indexer import PointIndexer, PolygonIndexer
+from app.services import entries
 
 
 def test_point_indexer():

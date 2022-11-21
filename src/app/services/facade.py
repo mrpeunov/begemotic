@@ -4,7 +4,7 @@ from .indexer import PointIndexer, PolygonIndexer
 
 from . import entries
 from ..repo.mongo import MongoHouseRepo
-from ...core.mongo import MongoWrapper
+from core.mongo import MongoWrapper
 
 
 class FacadeService:

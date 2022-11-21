@@ -3,11 +3,11 @@ import sys
 import uvicorn
 from fastapi import FastAPI
 
-from src.api.handlers import router
+from api.handlers import router
 from loguru import logger
-from src.core.config import config
-from src.core.mongo import MongoWrapper
-from src.core.utils.load_data import DataLoader
+from core.config import config
+from core.mongo import MongoWrapper
+from core.utils.load_data import DataLoader
 
 app = FastAPI()
 

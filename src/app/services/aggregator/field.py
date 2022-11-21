@@ -1,4 +1,4 @@
-from src.app.services.entries import FieldEnum, House, Number
+from app.services.entries import FieldEnum, House, Number
 
 
 class FieldGetter:

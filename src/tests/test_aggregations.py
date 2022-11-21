@@ -1,7 +1,7 @@
 import pytest
 
-from src.app.services.aggregator import AggregationFactory
-from src.app.services import entries
+from app.services.aggregator import AggregationFactory
+from app.services import entries
 
 
 @pytest.fixture

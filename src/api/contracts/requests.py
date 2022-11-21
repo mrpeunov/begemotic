@@ -1,4 +1,4 @@
-from src.app.services import entries
+from app.services import entries
 
 
 class PointAggrRequest(entries.PointAggrCommand):

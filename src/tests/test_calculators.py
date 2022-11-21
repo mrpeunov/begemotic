@@ -1,10 +1,10 @@
 import pytest
 
-from src.app.repo.mock import MockHouseRepo
-from src.app.services import entries
-from src.app.services.aggregator import AggregationFactory
-from src.app.services.calculator import Calculator
-from src.app.services.indexer import PointIndexer
+from app.repo.mock import MockHouseRepo
+from app.services import entries
+from app.services.aggregator import AggregationFactory
+from app.services.calculator import Calculator
+from app.services.indexer import PointIndexer
 
 
 @pytest.mark.asyncio

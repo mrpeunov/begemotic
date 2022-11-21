@@ -3,7 +3,7 @@ import h3
 from .. import entries
 from .base import BaseIndexer
 from loguru import logger
-from src.core.config import config
+from core.config import config
 
 
 class PointIndexer(BaseIndexer):

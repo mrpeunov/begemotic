@@ -1,6 +1,6 @@
-from src.app.services.aggregator.base import BaseAggregator
-from src.app.services.aggregator.field import FieldGetter
-from src.app.services.entries import Houses, AggrResult
+from app.services.aggregator.base import BaseAggregator
+from app.services.aggregator.field import FieldGetter
+from app.services.entries import Houses, AggrResult
 
 
 class AvgAggregator(BaseAggregator):

@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from src.api.contracts import responses, requests
-from src.app.services.facade import FacadeService
+from api.contracts import responses, requests
+from app.services.facade import FacadeService
 from loguru import logger
 
 router = APIRouter(tags=["Aggregation"])

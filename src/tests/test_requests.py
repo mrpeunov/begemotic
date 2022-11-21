@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 from contextlib import nullcontext as does_not_raise
-from src.api.contracts.requests import PointAggrRequest
+from api.contracts.requests import PointAggrRequest
 
 
 @pytest.fixture
