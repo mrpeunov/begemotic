@@ -1,21 +1,19 @@
 import motor.motor_asyncio
 
-
-client: motor.motor_asyncio.AsyncIOMotorClient
-
-
-def init_mongo_client():
-    global client
-    url = "mongodb+srv://my_test:WrqSDWWFEkIPuRnI@cluster0.82k1xob.mongodb.net/?retryWrites=true&w=majority"
-    client = motor.motor_asyncio.AsyncIOMotorClient(url)
+from src.core.config import config
 
 
-def get_mongo_client():
-    global client
-    return client
+class MongoWrapper:
+    _instance = None
 
+    def __init__(self):
+        print(config.MONGO_URL)
+        self.client = motor.motor_asyncio.AsyncIOMotorClient(config.MONGO_URL)
 
-def get_collection():
-    client = get_mongo_client()
-    db = client.begemotic
-    return db.houses
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__new__(cls, *args, **kwargs)
+        return cls._instance
+
+    def get_collection(self):
+        return self.client.begemotic.houses

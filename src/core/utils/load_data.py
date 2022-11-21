@@ -1,56 +1,45 @@
 from typing import List, Dict
 
-import pymongo
-from pymongo.server_api import ServerApi
 import pandas as pd
 import ast
 import h3
+from loguru import logger
+from src.core.config import config
 
 
-def get_mongo_client():
-    return pymongo.MongoClient(
-        "mongodb+srv://my_test:WrqSDWWFEkIPuRnI@cluster0.82k1xob.mongodb.net/?retryWrites=true&w=majority",
-        server_api=ServerApi('1')
-    )
+class DataLoader:
+    def __init__(self, collection):
+        self.collection = collection
 
+    async def load(self):
+        if (size := await self._collection_size()) == 0:
+            apartments = self._get_from_csv()
+            self._calculate_h3(apartments)
+            self._load_to_mongo(apartments)
+        else:
+            logger.info(f"{size} объектов уже были загружены")
 
-def get_collection():
-    client = get_mongo_client()
-    db = client.begemotic
-    return db.houses
+    def _get_from_csv(self) -> List[Dict]:
+        df = pd.read_csv('apartments.csv')
+        apartments = df.to_dict('records')
 
+        for apartment in apartments:
+            apartment['geopos'] = ast.literal_eval(apartment.get('geopos'))
 
-def load_data_from_csv() -> List[Dict]:
-    df = pd.read_csv('apartments.csv')
-    apartments = df.to_dict('records')
+        return apartments
 
-    for apartment in apartments:
-        apartment['geopos'] = ast.literal_eval(apartment.get('geopos'))
+    def _load_to_mongo(self, apartments: List[Dict]):
+        for apartment in apartments:
+            apartment["_id"] = apartment.pop("id")
+        self.collection.insert_many(apartments)
+        logger.info(f"Загружены {len(apartments)} объектов")
 
-    return apartments
+    def _calculate_h3(self, apartments: List[Dict]):
+        for apartment in apartments:
+            lat = apartment['geopos']['coordinates'][0]
+            lng = apartment['geopos']['coordinates'][1]
+            index = h3.geo_to_h3(lat=lat, lng=lng, resolution=config.RESOLUTION)
+            apartment['h3'] = index
 
-
-def calculate_h3(apartments: List[Dict]):
-    for apartment in apartments:
-        lat = apartment['geopos']['coordinates'][0]
-        lng = apartment['geopos']['coordinates'][1]
-        index = h3.geo_to_h3(lat=lat, lng=lng, resolution=11)
-        apartment['h3'] = index
-
-
-def load_to_mongo(apartments: List[Dict]):
-    collection = get_collection()
-    for apartment in apartments:
-        apartment["_id"] = apartment.pop("id")
-        collection.insert_one(apartment)
-        print(f"Добавлено {apartment}")
-
-
-def load_data_from_csv_to_mongo():
-    apartments = load_data_from_csv()
-    calculate_h3(apartments)
-    load_to_mongo(apartments)
-
-
-if __name__ == '__main__':
-    load_data_from_csv_to_mongo()
+    async def _collection_size(self) -> int:
+        return await self.collection.estimated_document_count()
