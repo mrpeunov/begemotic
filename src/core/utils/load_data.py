@@ -22,7 +22,7 @@ class DataLoader:
             logger.info(f"{size} объектов уже были загружены")
 
     def _get_from_csv(self) -> List[Dict]:
-        with open('./src/static/apartments.csv', newline='') as csvfile:
+        with open('/static/apartments.csv', newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter=',', quotechar='"')
             apartments = []
 

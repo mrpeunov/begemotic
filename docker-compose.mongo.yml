@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.7'
 
 services:
   app:
@@ -10,10 +10,25 @@ services:
     command: sh -c "python main.py"
     working_dir: /apps/
     env_file:
-      - .env
+      - .env_mongo
     volumes:
       - ./src/:/apps/
       - ./static/:/static/
     ports:
       - "8000:8000"
+    depends_on:
+      - mongodb
     restart: always
+
+  mongodb:
+    image: mongo:latest
+    env_file:
+      - .env_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+    name: mongo_data
