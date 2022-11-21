@@ -1,6 +1,7 @@
+import os
 from typing import List, Dict
 
-import pandas as pd
+import csv
 import ast
 import h3
 from loguru import logger
@@ -20,13 +21,22 @@ class DataLoader:
             logger.info(f"{size} объектов уже были загружены")
 
     def _get_from_csv(self) -> List[Dict]:
-        df = pd.read_csv('apartments.csv')
-        apartments = df.to_dict('records')
 
-        for apartment in apartments:
-            apartment['geopos'] = ast.literal_eval(apartment.get('geopos'))
+        with open('./src/static/apartments.csv', newline='') as csvfile:
+            reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+            apartments = []
 
-        return apartments
+            next(reader)
+            for row in reader:
+                apartments.append({
+                    "id": row[0],
+                    "geopos": ast.literal_eval(row[1]),
+                    "apartments": row[2],
+                    "price": row[3],
+                    "year": row[4]
+                })
+
+            return apartments
 
     def _load_to_mongo(self, apartments: List[Dict]):
         for apartment in apartments:
